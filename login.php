@@ -41,8 +41,9 @@ else{
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
+	$pwordhash=hash('sha512',$pword);
 	$row=$result->fetch_assoc();
-	if($pword == $row['pass']){
+	if($pwordhash == $row['pass']){
 
 		$_SESSION['uid']=$uname;
 		$_SESSION['user']=$user;

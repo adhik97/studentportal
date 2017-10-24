@@ -83,6 +83,10 @@ $('form').on("submit",function(event){
               setTimeout(function(){
                 $('#messageBox').find('a').eq(0).click();
               },10000);
+
+              if(response == 'Password updated'){
+                $('#messageBox').append('<br><p style="font-size:14px;text-align:center">Click <a href="./">here</a> to login again.</p>');
+              }
             
             
 

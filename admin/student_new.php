@@ -2,7 +2,7 @@
 
 
 $regno = !empty($_POST["regno"]) ? $_POST["regno"] : null;
-$defpass = !empty($_POST["defpass"]) ? $_POST["defpass"] : null;
+$dpass = !empty($_POST["defpass"]) ? $_POST["defpass"] : null;
 $name = !empty($_POST["name"]) ? $_POST["name"] : null;
 $dob = !empty($_POST["dob"]) ? date("Y-m-d", strtotime($_POST["dob"])) : null;
 $address = !empty($_POST["address"]) ? $_POST["address"] : null;
@@ -21,7 +21,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-
+$defpass = hash('sha512', $dpass);
 // Check connection
 $sql = "INSERT INTO student values ('$regno','$defpass','$defpass','$name', ". ($dob==NULL ? "NULL" : "'$dob'") .",'$address',$phno,'$email');";
 if ($conn->query($sql) === TRUE) {
