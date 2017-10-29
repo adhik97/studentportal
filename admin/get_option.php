@@ -15,7 +15,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-if(!$fid) {
+if($slot) {
 $sql = "select no from class where ".$slot."='No';";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
     echo "No free class found, choose a differect slot";
 	}
 }
-else
+else if($fid)
 {
 	$sql = "select id,name from faculty;";
 $result = $conn->query($sql);
@@ -55,6 +55,23 @@ if ($result->num_rows > 0) {
 	}
 
 
+}
+else
+{
+  $sql = "select no from slot;";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+
+    $rows = array();
+    while($row = $result->fetch_assoc()) {
+       $rows[] = $row[array_keys($row)[0]];
+    }
+
+    echo json_encode($rows); 
+}else {
+
+    echo "No slots are there";
+  }
 }
 
 

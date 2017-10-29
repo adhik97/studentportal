@@ -1,6 +1,6 @@
 <?php
 
-$class_no = $_POST["class_no"];
+$class_no = !empty($_POST["class_no"]) ? $_POST["class_no"] : null;
 
 
 
