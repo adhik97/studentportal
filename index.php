@@ -27,7 +27,7 @@ session_destroy();
               <br>
         <form method="post" action="./login.php">
           <div class="form-group"><a href="#" data-toggle="tooltip" title="User ID should be of either 5 or 10 characters">
-            <input type="text" class="form-control" name="uname" id="username" placeholder="Enter ID" pattern="([A-Z]{3}[0-9]{7}|[0-9]{5})"  style="text-transform:uppercase" maxlength="10" required="required"></a>
+            <input type="text" class="form-control" name="uname" id="username" placeholder="Enter ID" pattern="([A-Za-z]{3}[0-9]{7}|[0-9]{5})"  style="text-transform:uppercase" maxlength="10" required="required"></a>
         </div>
         <div class="form-group">
           <input type="password" class="form-control" name="pword" id="pwrod" placeholder="Enter Password" title="Minumum 4 Digits Required" pattern=".{4,15}" required="required">

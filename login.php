@@ -9,7 +9,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 
 
-$uname = isset($_POST['uname'])?$_POST['uname']:null;
+$uname = isset($_POST['uname'])? strtoupper($_POST['uname']):null;
 $pword = isset($_POST['pword'])?$_POST['pword']:null;
 
 if(strlen($pword) == 0 || strlen($uname) == 0)

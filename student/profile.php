@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
 
 }
 else
-header("Location: /studentportel/sessionerror.php");
+header("Location: /studentportal/sessionerror.php");
 
 ?>
 
@@ -89,7 +89,7 @@ header("Location: /studentportel/sessionerror.php");
                     <a class="active" href="#">Profile</a>
                 </li>
                 <li>
-                    <a href="#">Course Registeration</a>
+                    <a href="./course_res.php">Course Registeration</a>
                 </li>
                 <li>
                     <a href="#">My Courses</a>

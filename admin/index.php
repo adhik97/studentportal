@@ -159,7 +159,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="regno">Regno:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="regno" placeholder="Enter register number" name="regno" required>
+                                    <input type="text" class="form-control" id="regno" placeholder="Enter register number" style="text-transform:uppercase" maxlength="10" name="regno" required>
                                 </div>
                             </div>
                             <div class="form-group">

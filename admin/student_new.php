@@ -1,7 +1,7 @@
 <?php
 
 
-$regno = !empty($_POST["regno"]) ? $_POST["regno"] : null;
+$regno = !empty($_POST["regno"]) ? strtoupper($_POST["regno"]) : null;
 $dpass = !empty($_POST["defpass"]) ? $_POST["defpass"] : null;
 $name = !empty($_POST["name"]) ? $_POST["name"] : null;
 $dob = !empty($_POST["dob"]) ? date("Y-m-d", strtotime($_POST["dob"])) : null;

@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 $sql = "INSERT INTO slot (no,timing) values ('$slot_no','$timing');";
 if ($conn->query($sql) === TRUE) {
 	
-	$sql2 = "ALTER TABLE class ADD ".$slot_no." VARCHAR(2) NOT NULL DEFAULT 'No';";
+	$sql2 = "ALTER TABLE class ADD ".$slot_no." VARCHAR(3) NOT NULL DEFAULT 'No';";
 	
 	if ($conn->query($sql2) === TRUE){
     echo "<strong>Success: </strong>". $slot_no ." was added successfully";

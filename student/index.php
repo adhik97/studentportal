@@ -8,7 +8,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     session_destroy();   // destroy session data in storage
 }
 $_SESSION['LAST_ACTIVITY'] = time();
+if(isset($_SESSION['uid'])){
 
+}
+else
+header("Location: /studentportal/sessionerror.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +65,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
                     <a  href="./profile.php">Profile</a>
                 </li>
                 <li>
-                    <a href="#">Course Registeration</a>
+                    <a href="./course_res.php">Course Registeration</a>
                 </li>
                 <li>
                     <a href="#">My Courses</a>
