@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
 
 }
 else
-header("Location: /studentportel/sessionerror.php");
+header("Location: ../sessionerror.php");
 
 ?>
 
@@ -90,7 +90,7 @@ header("Location: /studentportel/sessionerror.php");
                 </li>
                
                 <li>
-                    <a href="#">My Courses</a>
+                    <a href="./my_courses.php">My Courses</a>
                 </li>
                 <li>
                     <a href="/studentportal">Log out</a>
@@ -148,11 +148,9 @@ header("Location: /studentportel/sessionerror.php");
                 <div class="col-sm-8 val" ><?php echo $row['position']; ?></div>
               </div>  
               <br>
-              <div class="row">
-                <div class="col-sm-12 text-center" ><button type="button" id="edit" class="btn btn-info" style="min-width:150px">Edit</button></div>
-                </div> 
             </div> 
 <br>
+<!--
 <div id="editprofile" style="display:none;">
 <form class="form-horizontal" action="./update_faculty.php">
   <div class="form-group">
@@ -223,7 +221,8 @@ header("Location: /studentportel/sessionerror.php");
     </div>
   </form>
 </div>
-             <div style="display:none;" id="messageBox">
+-->
+             <h4> Click <a href="../resetpass.php" style="text-decoration: none;">here</a> if you wish to change the password</h4>
    
   </div>
 
@@ -243,7 +242,7 @@ header("Location: /studentportel/sessionerror.php");
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Menu Toggle Script -->
     <script>
-    $(document).ready(function(){
+    /*$(document).ready(function(){
    $("#edit").click(function(){
     $("#viewprofile").toggle(200,function(){
     $("#editprofile").toggle(200);
@@ -284,7 +283,7 @@ $('form').on("submit",function(event){
           });
     
 });
-});
+}); */
     </script>
 
 </body>

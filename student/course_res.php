@@ -36,7 +36,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Student - Profile</title>
+    <title>Student - Course Registration</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
@@ -105,6 +105,8 @@ $result = $conn->query($sql);
 if ($result->num_rows <= 0)
  $hh='hidden'; 
 echo '<div class="table-responsive '.$hh.'" id="atable">'; ?>
+        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        <br>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -117,6 +119,7 @@ echo '<div class="table-responsive '.$hh.'" id="atable">'; ?>
                         </tr>
                     </thead>
                     <tbody id="acourses">
+
                         <?php
 
 
@@ -246,6 +249,13 @@ echo '<h3 id="rmessage" class="text-center '.$hh.'">No courses have been registe
     <!-- Menu Toggle Script -->
     <script>
     $(document).ready(function() {
+
+         $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#acourses tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 
         console.log('hello12');
 

@@ -34,10 +34,13 @@ $_SESSION['LAST_ACTIVITY'] = time();
 <?php 
 
  if(isset($_SESSION['uid']))
- {
+ {  
+  $msg = '';
+  if(isset($_GET['first']))
+  $msg = 'As this is your first time, please change your password';
  	$form = '              
         <form method="post" action="./resetpass_submit.php">
-        <p style="font-size:12px;">As this is your first time, please change your password</p>
+        <p style="font-size:12px;">'.$msg.'</p>
           
         <div class="form-group">
           <input type="password" class="form-control" name="cpass" id="cpass" placeholder="Enter current password" title="Minumum 4 Digits Required" pattern=".{4,15}" required="required">

@@ -62,7 +62,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
                 </li>
               
                 <li>
-                    <a href="#">My Courses</a>
+                    <a href="./my_courses.php">My Courses</a>
                 </li>
                  <li>
                     <a href="/studentportal">Log out</a>
