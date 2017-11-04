@@ -68,7 +68,7 @@ header("Location: /studentportal/sessionerror.php");
                     <a href="./course_res.php">Course Registeration</a>
                 </li>
                 <li>
-                    <a href="#">My Courses</a>
+                    <a href="./my_courses.php">My Courses</a>
                 </li>
                 <li>
                     <a href="/studentportal">Log out</a>

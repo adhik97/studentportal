@@ -24,7 +24,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "select course.id,course.unique_id,course.name,course.slot,course.class_no,faculty.name fname,course.faculty_id from course JOIN Faculty where course.unique_id not in (select distinct student_course.course_unique_id from student_course where student_regno='$uid');";
+// C JOIN faculty F ON c.faculty_id = F.id
+
+$sql = "select course.id,course.unique_id,course.name,course.slot,course.class_no,faculty.name fname,course.faculty_id from course JOIN faculty ON course.faculty_id = faculty.id where course.unique_id not in (select distinct student_course.course_unique_id from student_course where student_regno='$uid');";
 $result = $conn->query($sql);
 
 ?>
@@ -75,7 +77,7 @@ $result = $conn->query($sql);
                     <a class="active" href="#">Course Registeration</a>
                 </li>
                 <li>
-                    <a href="#">My Courses</a>
+                    <a href="./my_courses.php">My Courses</a>
                 </li>
                 <li>
                     <a href="/studentportal">Log out</a>
@@ -165,7 +167,7 @@ echo '<h3 id="amessage" class="text-center '.$hh.'">No courses have been offered
             <br>
             <h2> Registered courses </h2>
             <?php 
-$sql = "select course.id,course.unique_id,course.name,course.slot,course.class_no,faculty.name fname,course.faculty_id from course JOIN student_course ON course.unique_id = student_course.course_unique_id JOIN faculty where student_course.student_regno = '$uid';";
+$sql = "select course.id,course.unique_id,course.name,course.slot,course.class_no,faculty.name fname,course.faculty_id from course JOIN student_course ON course.unique_id = student_course.course_unique_id JOIN faculty ON course.faculty_id = faculty.id where student_course.student_regno = '$uid';";
 $result = $conn->query($sql);
 
  $hh='';
