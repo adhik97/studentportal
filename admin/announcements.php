@@ -8,12 +8,16 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     session_destroy();   // destroy session data in storage
 }
 $_SESSION['LAST_ACTIVITY'] = time();
-if(isset($_SESSION['uid'])){
-  $uid=$_SESSION['uid'];
 
-   $user = $_SESSION['user'];
-    if($user != 'student')
+if(isset($_SESSION['uid'])){
+    $uid=$_SESSION['uid'];
+
+    $user = $_SESSION['user'];
+    if($user != 'admin')
         header("Location: ../usererror.php");
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -26,7 +30,7 @@ if(isset($_SESSION['uid'])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Student - Home</title>
+  <title>Admin - Announcements</title>
 
     <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -59,22 +63,19 @@ if(isset($_SESSION['uid'])){
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        Student
+                    <a href="./">
+                        Admin
                     </a>
                 </li>
+               
+              
                 <li>
-                    <a  href="./profile.php">Profile</a>
+                    <a href="#" class="active">Announcements</a>
                 </li>
-                <li>
-                    <a href="./course_res.php">Course Registeration</a>
-                </li>
-                <li>
-                    <a href="./my_courses.php">My Courses</a>
-                </li>
-                <li>
+                 <li>
                     <a href="/studentportal">Log out</a>
                 </li>
+
                 <!--<li>
                     <a href="#">Events</a>
                 </li>
@@ -95,9 +96,24 @@ if(isset($_SESSION['uid'])){
         <div id="page-content-wrapper">
             <div class="container-fluid">
         
-                <h1>Home</h1><br>
+                <h1>Announcements</h1><br>
                 
-           
+    <form action="../messages.php">
+    <div class="form-group">
+   <label for="sel1">To:</label>
+  <select class="form-control" id="sel1" required>
+    <option value="ALL">ALL</option>
+    <option value="STU">STUDENTS</option>
+    <option value="FAC">FACULTIES</option>
+  </select>
+      
+    </div>
+    <div class="form-group">
+      <label for="ann">Message:</label>
+    <textarea class="form-control" name="ann" maxlength="65535" id="ann" rows="6" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
         
 
 
@@ -118,21 +134,13 @@ if(isset($_SESSION['uid'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Menu Toggle Script -->
-    <script>
-    $(document).ready(function(){
-   $("#edit").click(function(){
-    $("#viewprofile").toggle(200,function(){
-    $("#editprofile").toggle(200);
-    });
-   });
-});
-    </script>
+    <script></script>
 
 </body>
 
-</html>
-<?php
+</html><?php
+
 }
 else
-header("Location: /studentportal/sessionerror.php");
+header("Location: ../sessionerror.php");
 ?>

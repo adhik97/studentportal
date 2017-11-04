@@ -9,6 +9,13 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
+if(isset($_SESSION['uid'])){
+$uid=$_SESSION['uid'];
+
+ $user = $_SESSION['user'];
+    if($user != 'faculty')
+        header("Location: ../usererror.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,3 +123,9 @@ $_SESSION['LAST_ACTIVITY'] = time();
 </body>
 
 </html>
+<?php
+
+}
+else
+header("Location: ../sessionerror.php");
+?>

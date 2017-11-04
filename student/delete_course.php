@@ -13,6 +13,10 @@ if(isset($_SESSION['uid'])){
 
 $uid=$_SESSION['uid'];
 
+ $user = $_SESSION['user'];
+    if($user != 'student')
+        header("Location: ../usererror.php");
+
 if(isset($_POST['unique_id'])){
 
 $unique_id = $_POST['unique_id'];

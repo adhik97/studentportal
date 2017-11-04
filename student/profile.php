@@ -16,6 +16,10 @@ $dbname = "test";
 if(isset($_SESSION['uid'])){
 $uid=$_SESSION['uid'];
 
+ $user = $_SESSION['user'];
+    if($user != 'student')
+        header("Location: ../usererror.php");
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {

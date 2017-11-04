@@ -10,8 +10,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 $_SESSION['LAST_ACTIVITY'] = time();
 
 if(isset($_SESSION['uid'])){
-
 $uid=$_SESSION['uid'];
+
+ $user = $_SESSION['user'];
+    if($user != 'student')
+        header("Location: ../usererror.php");
 
 if(isset($_POST['unique_id'])){
 

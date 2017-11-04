@@ -1,143 +1,104 @@
+<?php 
+
+session_start();
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 300)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
+if(isset($_SESSION['uid'])){
+    $uid=$_SESSION['uid'];
+
+    $user = $_SESSION['user'];
+    if($user != 'admin')
+        header("Location: ../usererror.php");
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Admin - Home</title>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-    $(function() {
-        $('form').on("submit", function(event) {
-            event.preventDefault();
-            $form = $(this);
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-            $.ajax({
-                type: 'post',
-                url: $form.attr('action'),
-                data: $form.serialize(),
-                success: function(response) {
+  <title>Admin - Home</title>
 
-                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
-                    $('#messageBox').fadeIn(200);
-                    setTimeout(function() {
-                        $('#messageBox').find('a').eq(0).click();
-                    }, 10000);
+    <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
 
-                    if (response.search("Success") >= 0)
-                        $form.find('button[type="reset"]').click();
+    <link href="../css/simple-sidebar.css" rel="stylesheet">
+    <style>
+  .cont {
+  background-color:#424242;
+  border-radius:3px 0px 0px 10px;
+  padding:10px;
+  color:white;
+  }
+  
+  .val {
+  background-color:#bdbdbd; 
+  border-radius:0px 3px 10px 0px;
+  padding:10px;
+  min-height:40px;
+  }
+  </style>
 
-                }
-            });
-
-        });
-
-        function ajaxOption(data, callback) {
-            $.ajax({
-                type: 'post',
-                url: './get_option.php',
-                data: data,
-                success: function(response) {
-                    //$('#messageBox').html(response);
-                    callback(response);
-                },
-                error: function(response) {
-                    callback(response);
-
-                }
-            });
-
-        }
-
-        function isJson(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-
-        $('#slot').on('change', function() {
-            $('#classno').html(" <option disabled selected value> -- select a class -- </option>");
-
-
-            data = 'slot=' + this.value;
-            ajaxOption(data, function(response) {
-
-                if (isJson(response)) {
-                    var arr = JSON.parse(response);
-                    $.each(arr, function(index, value) {
-                        $('#classno').append("<option>" + value + "</option>");
-                    });
-                } else {
-                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
-                    $('#messageBox').fadeIn(200);
-                    setTimeout(function() {
-                        $('#messageBox').find('a').eq(0).click();
-                    }, 10000);
-                }
-
-            });
-
-        });
-
-        $("#course_link,#refresh_flist").click(function() {
-
-            $('#f_id').html("<option disabled selected value> -- select a faculty -- </option>");
-
-             $('#classno').html(" <option disabled selected value> -- select a slot first -- </option>");
-
-            data = 'f_id=true';
-            ajaxOption(data, function(response) {
-
-                if (isJson(response)) {
-                    var arr = JSON.parse(response);
-                    $.each(arr, function(index, value) {
-                        $('#f_id').append("<option value=" + value.id + ">" + value.id + " - " + value.name + "</option>");
-                    });
-                } else {
-                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
-                    $('#messageBox').fadeIn(200);
-                    setTimeout(function() {
-                        $('#messageBox').find('a').eq(0).click();
-                    }, 10000);
-                }
-            });
-
-        });
-
-        $("#course_link,#refresh_slot").click(function(){
-
-            $('#slot').html("<option disabled selected value> -- select a slot -- </option>");
-
-            ajaxOption('',function(response){
-
-                if (isJson(response)) {
-                    var arr = JSON.parse(response);
-                     $.each(arr, function(index, value) {
-                        $('#slot').append("<option>" + value + "</option>");
-                    });
-                } else {
-                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
-                    $('#messageBox').fadeIn(200);
-                    setTimeout(function() {
-                        $('#messageBox').find('a').eq(0).click();
-                    }, 10000);
-                }
-                
-            });
-
-        });
-
-    });
-    </script>
 </head>
 
 <body>
-    <div class="container">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Admin
+                    </a>
+                </li>
+               
+              
+                <li>
+                    <a href="./announcements.php">Announcements</a>
+                </li>
+                 <li>
+                    <a href="/studentportal">Log out</a>
+                </li>
+
+                <!--<li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li> -->
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+        
+                <h1>Home</h1><br>
+
+                
         <br>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -380,8 +341,155 @@
                 </div>
             </div>
         </div>
+    
+                
+  
+
+
+              
+
+
     </div>
+        
+ </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Menu Toggle Script -->
     <script>
+      
+    $(document).ready(function() {
+        $('form').on("submit", function(event) {
+            event.preventDefault();
+            $form = $(this);
+
+            $.ajax({
+                type: 'post',
+                url: $form.attr('action'),
+                data: $form.serialize(),
+                success: function(response) {
+
+                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
+                    $('#messageBox').fadeIn(200);
+                    setTimeout(function() {
+                        $('#messageBox').find('a').eq(0).click();
+                    }, 10000);
+
+                    if (response.search("Success") >= 0)
+                        $form.find('button[type="reset"]').click();
+
+                }
+            });
+
+        });
+
+        function ajaxOption(data, callback) {
+            $.ajax({
+                type: 'post',
+                url: './get_option.php',
+                data: data,
+                success: function(response) {
+                    //$('#messageBox').html(response);
+                    callback(response);
+                },
+                error: function(response) {
+                    callback(response);
+
+                }
+            });
+
+        }
+
+        function isJson(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }
+
+        $('#slot').on('change', function() {
+            $('#classno').html(" <option disabled selected value> -- select a class -- </option>");
+
+
+            data = 'slot=' + this.value;
+            ajaxOption(data, function(response) {
+
+                if (isJson(response)) {
+                    var arr = JSON.parse(response);
+                    $.each(arr, function(index, value) {
+                        $('#classno').append("<option>" + value + "</option>");
+                    });
+                } else {
+                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
+                    $('#messageBox').fadeIn(200);
+                    setTimeout(function() {
+                        $('#messageBox').find('a').eq(0).click();
+                    }, 10000);
+                }
+
+            });
+
+        });
+
+        $("#course_link,#refresh_flist").click(function() {
+
+            $('#f_id').html("<option disabled selected value> -- select a faculty -- </option>");
+
+             $('#classno').html(" <option disabled selected value> -- select a slot first -- </option>");
+
+            data = 'f_id=true';
+            ajaxOption(data, function(response) {
+
+                if (isJson(response)) {
+                    var arr = JSON.parse(response);
+                    $.each(arr, function(index, value) {
+                        $('#f_id').append("<option value=" + value.id + ">" + value.id + " - " + value.name + "</option>");
+                    });
+                } else {
+                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
+                    $('#messageBox').fadeIn(200);
+                    setTimeout(function() {
+                        $('#messageBox').find('a').eq(0).click();
+                    }, 10000);
+                }
+            });
+
+        });
+
+        $("#course_link,#refresh_slot").click(function(){
+
+            $('#slot').html("<option disabled selected value> -- select a slot -- </option>");
+
+            ajaxOption('',function(response){
+
+                if (isJson(response)) {
+                    var arr = JSON.parse(response);
+                     $.each(arr, function(index, value) {
+                        $('#slot').append("<option>" + value + "</option>");
+                    });
+                } else {
+                    $('#messageBox').append('<div class="alert alert-info alert-dismissable"><a class="close" data-dismiss="alert">×</a><span>' + response + '</span></div>');
+                    $('#messageBox').fadeIn(200);
+                    setTimeout(function() {
+                        $('#messageBox').find('a').eq(0).click();
+                    }, 10000);
+                }
+                
+            });
+
+        });
+
+    });
+
     function toggler(e, id) {
         if (e.innerHTML == 'Show') {
             e.innerHTML = 'Hide'
@@ -399,6 +507,13 @@
 
     }
     </script>
+
 </body>
 
 </html>
+<?php
+
+}
+else
+header("Location: ../sessionerror.php");
+?>

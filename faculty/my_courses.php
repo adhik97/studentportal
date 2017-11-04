@@ -16,6 +16,10 @@ $dbname = "test";
 if(isset($_SESSION['uid'])){
 $uid=$_SESSION['uid'];
 
+ $user = $_SESSION['user'];
+    if($user != 'faculty')
+        header("Location: ../usererror.php");
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
@@ -179,7 +183,7 @@ EOD;
         <td></td>
         <td><p></p></td>
         <td style="width:150px;min-width:150px">
-        <div class="btn-group">
+        
         
         <form action="../delete.php" method="post" class="delete">
     <input type="hidden" value="" name="fname">
@@ -272,6 +276,10 @@ $('body').on("submit","form",function(event){
  $form = $(this);
 
 if($form.hasClass('files')){
+  $("#filestable").addClass('hidden');
+  $("#NoFiles").removeClass('hidden');
+    var tr=$('#dummyRow').clone();
+  $('#filestbody').html(tr);
  $('#unique_id').val($form.find('input').val());
  $("#myModal").modal('show');
 
@@ -356,7 +364,7 @@ else if($form.hasClass('delete')){
 }
 else{
 
-   var bar = $('#prograssBar');
+    var bar = $('#prograssBar');
     var percent = $('#prograssBar').find('div').eq(0);
     bar.removeClass('hidden');
     $("#messageBox").html('');

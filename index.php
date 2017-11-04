@@ -28,7 +28,7 @@ session_destroy();
         <form method="post" action="./login.php">
           <div class="form-group"><a href="#" data-toggle="tooltip" title="User ID should be of either 5 or 10 characters">
             <div class="input-group"><span class="input-group-addon glyphicon glyphicon-user"></span>
-            <input type="text" class="form-control" name="uname" id="username" placeholder="Enter ID" pattern="([A-Za-z]{3}[0-9]{7}|[0-9]{5})"  style="text-transform:uppercase" maxlength="10" required="required"></div></a>
+            <input type="text" class="form-control" name="uname" id="username" placeholder="Enter ID" pattern="([A-Za-z]{3}[0-9]{7}|[0-9]{5}|[\w]{11})"  style="text-transform:uppercase" maxlength="11" required="required"></div></a>
         </div>
         <div class="form-group">
           <div class="input-group">
@@ -70,7 +70,7 @@ session_destroy();
       
 
       l = $("#username").val().length;r="";
-      if( !(l == 5 || l == 10))
+      if( !(l == 5 || l == 10 || l == 11))
         r=r+"Enter a proper User ID";
       if($("#pwrod").val().length < 4)
         r=r+"\nPassword should be of minimum 4 characters";
@@ -96,10 +96,13 @@ session_destroy();
 
 
               if(response.search('success')==0){
-                if( $("#username").val().length ==5)
+                len = $("#username").val().length;
+                if(len==5)
                 window.location = './faculty/';
-                else
+                else if(len==10)
                 window.location = './student/';
+                else
+                window.location = './admin/'; 
               }
 
               else if(response.search('passchange')==0){

@@ -12,6 +12,10 @@ $_SESSION['LAST_ACTIVITY'] = time();
 if(isset($_SESSION['uid'])){
 $uid=$_SESSION['uid'];
 
+ $user = $_SESSION['user'];
+    if($user != 'student')
+        header("Location: ../usererror.php");
+
 $servername = "localhost";
 $username = "root";
 $password = "";

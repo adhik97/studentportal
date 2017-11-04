@@ -29,9 +29,13 @@ if($user == 'student'){
 	
 $sql="select pass from student where regno='$uid';";
 }
-else{
+else if($user == 'faculty'){
 	
 $sql="select pass from faculty where id='$uid';";
+}
+else
+{
+	$sql="select pass from adminusers where username='$uid';";
 }
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -43,14 +47,17 @@ if ($result->num_rows > 0) {
 							if($_POST['pass'] == $_POST['ccpass']){
 								
 								$passs=hash('sha512', $_POST['pass']);
-								$sql="update $user SET pass='$passs' where ".($user=='student'?'regno':'id')." ='$uid';";
-										if ($conn->query($sql) === TRUE) {
-							   			 echo "Password updated";
-										} 
-										else
-										 {
-							    		echo "DB Error: ". $conn->error;
-										}
+								if($user == 'admin')
+									$sql = "update adminusers SET pass='$passs' where username='$uid';";
+								else
+									$sql="update $user SET pass='$passs' where ".($user=='student'?'regno':'id')." ='$uid';";
+								if ($conn->query($sql) === TRUE) {
+					   			 echo "Password updated";
+								} 
+								else
+								 {
+					    		echo "DB Error: ". $conn->error;
+								}
 							}
 							else
 								echo "New password and confirm password doesn't match";

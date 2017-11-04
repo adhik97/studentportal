@@ -14,7 +14,7 @@ $pword = isset($_POST['pword'])?$_POST['pword']:null;
 
 if(strlen($pword) == 0 || strlen($uname) == 0)
 echo '<h1 style="text-align:center;">Don\'t leave the field blank</h1';
-else if(!(strlen($uname) == 5 || strlen($uname) == 10))
+else if(!(strlen($uname) == 5 || strlen($uname) == 10 || strlen($uname) == 11))
 echo '<h1 style="text-align:center;">Enter a proper User ID</h1>';
 
 
@@ -33,9 +33,14 @@ if(strlen($uname) == 10 ){
 	$sql="select defpass,pass from student where regno='$uname';";
 	$user="student";
 }
-else{
+else if(strlen($uname) == 5 ){
  $sql="select defpass,pass from faculty where id='$uname';";
  $user="faculty";
+}
+else
+{
+ $sql="select defpass,pass from adminusers where username='$uname';";
+ $user="admin";
 }
 
 $result = $conn->query($sql);
