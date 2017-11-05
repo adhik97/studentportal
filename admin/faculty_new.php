@@ -1,4 +1,20 @@
 <?php
+session_start();
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 300)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
+if(isset($_SESSION['uid'])){
+    $uid=$_SESSION['uid'];
+
+    $user = $_SESSION['user'];
+    if($user != 'admin')
+        header("Location: ../usererror.php");
+
 
 
 $fid = !empty($_POST["fid"]) ? $_POST["fid"] : null;
@@ -32,12 +48,14 @@ $sql = "INSERT INTO faculty values ('$fid','$defpassf','$defpassf','$fname', ". 
 if ($conn->query($sql) === TRUE) {
     echo "<strong>Success: </strong>". $fid ." - " . $fname ." was added successfully";
 } else {
-    echo "<strong>Error: </strong>". $conn->error;
+    echo "<strong>Error: </strong> This faculty ID has been taken";
 }
 
 $conn->close();
 
 
-
+}
+else
+header("Location: ../sessionerror.php");
 
 ?>

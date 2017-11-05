@@ -1,5 +1,21 @@
 <?php
+session_start();
 
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 300)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
+if(isset($_SESSION['uid'])){
+    $uid=$_SESSION['uid'];
+
+    $user = $_SESSION['user'];
+    if($user != 'admin')
+        header("Location: ../usererror.php");
+
+      
 $slot = isset($_POST["slot"]) ? $_POST["slot"] : null;
 $fid = isset($_POST["f_id"]) ? $_POST["f_id"] : null;
 
@@ -77,6 +93,9 @@ else
 
 
 $conn->close(); 
+}
+else
+header("Location: ../sessionerror.php");
 
 
 

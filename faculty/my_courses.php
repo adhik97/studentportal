@@ -135,6 +135,10 @@ $result = $conn->query($sql);
                   <td>{$row['slot']}</td>
                   <td>{$row['class_no']}</td>
                   <td>
+                  <form action="./view_stud.php" method="post" class="stud">
+                  <input type="hidden" name="unique_id" value="{$row['unique_id']}">
+                  <button class="btn btn-info btn-block">STUDENTS</button>
+                  </form>
                   <form action="../files.php" method="post" class="files">
                   <input type="hidden" name="unique_id" value="{$row['unique_id']}">
                   <button class="btn btn-primary btn-block">FILES</button>
@@ -251,6 +255,37 @@ EOD;
     </div>
         
  </div>
+
+ <div id="studentModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Students</h4>
+      </div>
+      <div class="modal-body">
+
+    <table class="table table-striped" id="stuTable">
+    <thead>
+      <tr>
+        <th>Register number</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+     
+    </tbody>
+  </table>
+
+  <h4 id="NoStu"></h4>
+
+      </div>
+    </div>
+
+  </div>
+</div>
         <!-- /#page-content-wrapper -->
 
     </div>
@@ -356,6 +391,44 @@ else if($form.hasClass('delete')){
                       .prop('disabled', false);
                       alert(ob.message);
                     }
+                    
+
+  }
+
+  });
+}
+else if($form.hasClass('stud')){
+
+  
+  $("#stuTable").find('tbody').html('');
+  $("#NoStu").html('');
+   $("#stuTable").removeClass('hidden');
+   
+   $.ajax({
+                  type: 'post',
+                  url: $form.attr('action'),
+                  data: $form.serialize(),
+                  success: function(response) {
+
+
+                    
+                    ob = JSON.parse(response);
+                    console.log(ob);
+                    if(ob.type == 'success'){
+
+                     $.each(ob.message,function(index,value){
+
+                      $("#stuTable").find('tbody').append('<tr><td>'+value.student_regno+'</td><td>'+value.name+'</td></tr>');
+
+                     });
+
+                    }
+                    else
+                    {
+                     $("#stuTable").addClass('hidden');
+                     $('#NoStu').html(ob.message);
+                    }
+                    $("#studentModal").modal('show'); 
                     
 
   }

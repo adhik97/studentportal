@@ -15,6 +15,22 @@ if(isset($_SESSION['uid'])){
     if($user != 'student')
         header("Location: ../usererror.php");
 
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbname = "test";
+
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error)
+    die("Connection failed: " . $conn->connect_error);
+
+
+      $sql = " select * from messages where sent_by='ADMIN' AND (recieve='ALL' OR recieve='STU') ORDER BY time_issued DESC;";
+
+      $result = $conn->query($sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +112,32 @@ if(isset($_SESSION['uid'])){
             <div class="container-fluid">
         
                 <h1>Home</h1><br>
+
+                <h3>Announcements</h3>
+                <br>
+                <div class="panel-group">
+
+                <?php 
+  if($result->num_rows > 0){
+
+     while($row = $result->fetch_assoc())
+    {
+
+    echo <<<EOD
+     <div class="panelPart panel panel-default">
+    <div class="panel-body"><p>{$row['messageData']}</p></div>
+    <div class="panel-footer text-right"> 
+  Posted : {$row['time_issued']}
+  </div>
+  </div>
+EOD;
+
+  }
+}
+  ?>
+
+
+                </div>
                 
            
         

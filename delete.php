@@ -29,7 +29,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "select faculty_id from files JOIN course where filename = '$filename';";
+$sql = "select faculty_id from files JOIN course ON files.unique_id=course.unique_id where filename = '$filename';";
 $result = $conn->query($sql);
 
 if($result->num_rows > 0){
